@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ECOB BRACKET</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#0b0b0f;
+    color:#fff;
+    padding:20px;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+}
+
+.header{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.header h1{
+    font-size:32px;
+    font-weight:900;
+    letter-spacing:2px;
+}
+
+.header p{
+    color:#999;
+    margin-top:5px;
+}
+
+.card{
+    background:#15151b;
+    border:1px solid #292932;
+    border-radius:14px;
+    padding:20px;
+    margin-bottom:20px;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+select,
+input{
+    width:100%;
+    height:45px;
+    border:1px solid #34343d;
+    background:#0d0d12;
+    color:#fff;
+    border-radius:8px;
+    padding:0 12px;
+    outline:none;
+}
+
+select:focus,
+input:focus{
+    border-color:#fff;
+}
+
+.team-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+    margin-top:15px;
+}
+
+button{
+    border:0;
+    border-radius:8px;
+    height:48px;
+    padding:0 20px;
+    font-size:15px;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.generate{
+    width:100%;
+    margin-top:20px;
+    background:#fff;
+    color:#000;
+}
+
+.actions{
+    display:flex;
+    gap:10px;
+    margin-top:20px;
+}
+
+.actions button{
+    flex:1;
+}
+
+.save{
+    background:#20c878;
+    color:#fff;
+}
+
+.reset{
+    background:#292932;
+    color:#fff;
+}
+
+#bracketArea{
+    display:none;
+}
+
+.bracket-title{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.bracket-title h2{
+    font-size:24px;
+}
+
+.bracket{
+    display:flex;
+    justify-content:space-between;
+    align-items:stretch;
+    gap:20px;
+    overflow-x:auto;
+    padding:25px;
+    background:#101015;
+    border-radius:12px;
+    min-height:500px;
+}
+
+.side{
+    display:flex;
+    flex-direction:column;
+    justify-content:space-around;
+    min-width:270px;
+    flex:1;
+}
+
+.side.right{
+    direction:rtl;
+}
+
+.side.right .match{
+    direction:ltr;
+}
+
+.match{
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    margin:10px 0;
+}
+
+.team{
+    min-height:42px;
+    display:flex;
+    align-items:center;
+    padding:0 12px;
+    background:#1b1b22;
+    border:1px solid #363640;
+    border-radius:6px;
+    font-size:14px;
+    font-weight:bold;
+}
+
+.connector{
+    position:absolute;
+    width:20px;
+    height:1px;
+    background:#555;
+    top:50%;
+}
+
+.left .connector{
+    right:-20px;
+}
+
+.right .connector{
+    left:-20px;
+}
+
+.center{
+    min-width:150px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+}
+
+.center-box{
+    padding:18px 15px;
+    border:2px solid #fff;
+    border-radius:10px;
+    font-weight:900;
+}
+
+.empty{
+    color:#777;
+    font-weight:normal;
+}
+
+@media(max-width:700px){
+
+    body{
+        padding:12px;
+    }
+
+    .header h1{
+        font-size:25px;
+    }
+
+    .team-grid{
+        grid-template-columns:1fr;
+    }
+
+    .bracket{
+        min-width:850px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>ECOB BRACKET</h1>
+        <p>Tournament Bracket Generator</p>
+    </div>
+
+    <div class="card">
+
+        <label>SELECT ROUND</label>
+
+        <select id="roundSelect" onchange="createTeamInputs()">
+            <option value="8">8 Teams</option>
+            <option value="16">16 Teams</option>
+            <option value="32" selected>32 Teams</option>
+        </select>
+
+        <div id="teamInputs" class="team-grid"></div>
+
+        <button class="generate" onclick="generateBracket()">
+            GENERATE BRACKET
+        </button>
+
+    </div>
+
+    <div id="bracketArea">
+
+        <div class="card">
+
+            <div class="bracket-title">
+                <h2>ECOB BRACKET</h2>
+            </div>
+
+            <div id="bracket" class="bracket"></div>
+
+            <div class="actions">
+
+                <button class="save" onclick="saveBracketImage()">
+                    SAVE BRACKET IMAGE
+                </button>
+
+                <button class="reset" onclick="resetBracket()">
+                    RESET
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+let currentTeams = [];
+let currentRound = 32;
+
+
+/* =========================
+   CREATE TEAM INPUTS
+========================= */
+
+function createTeamInputs(){
+
+    currentRound = Number(
+        document.getElementById("roundSelect").value
+    );
+
+    const box = document.getElementById("teamInputs");
+
+    box.innerHTML = "";
+
+    for(let i = 1; i <= currentRound; i++){
+
+        const input = document.createElement("input");
+
+        input.type = "text";
+        input.placeholder = "Team " + i;
+        input.id = "team_" + i;
+
+        box.appendChild(input);
+    }
+
+    loadSavedTeams();
+}
+
+
+/* =========================
+   SAVE TEAM DATA
+========================= */
+
+function saveTeams(){
+
+    const teams = [];
+
+    for(let i = 1; i <= currentRound; i++){
+
+        const input = document.getElementById("team_" + i);
+
+        teams.push(input ? input.value : "");
+    }
+
+    localStorage.setItem(
+        "ECOB_BRACKET_TEAMS",
+        JSON.stringify(teams)
+    );
+
+    localStorage.setItem(
+        "ECOB_BRACKET_ROUND",
+        currentRound
+    );
+}
+
+
+/* =========================
+   LOAD SAVED DATA
+========================= */
+
+function loadSavedTeams(){
+
+    const saved = localStorage.getItem(
+        "ECOB_BRACKET_TEAMS"
+    );
+
+    if(!saved) return;
+
+    try{
+
+        const teams = JSON.parse(saved);
+
+        teams.forEach((name,index)=>{
+
+            const input = document.getElementById(
+                "team_" + (index + 1)
+            );
+
+            if(input){
+                input.value = name;
+            }
+
+        });
+
+    }catch(e){
+
+        console.log(e);
+
+    }
+}
+
+
+/* =========================
+   GENERATE BRACKET
+========================= */
+
+function generateBracket(){
+
+    saveTeams();
+
+    currentTeams = [];
+
+    for(let i = 1; i <= currentRound; i++){
+
+        const input = document.getElementById(
+            "team_" + i
+        );
+
+        let name = input.value.trim();
+
+        if(name === ""){
+            name = "Team " + i;
+        }
+
+        currentTeams.push(name);
+    }
+
+    localStorage.setItem(
+        "ECOB_BRACKET_GENERATED",
+        "YES"
+    );
+
+    drawBracket();
+
+    document.getElementById(
+        "bracketArea"
+    ).style.display = "block";
+
+    setTimeout(()=>{
+
+        document.getElementById(
+            "bracketArea"
+        ).scrollIntoView({
+            behavior:"smooth"
+        });
+
+    },100);
+
+}
+
+
+/* =========================
+   DRAW BRACKET
+========================= */
+
+function drawBracket(){
+
+    const bracket =
+        document.getElementById("bracket");
+
+    bracket.innerHTML = "";
+
+    const leftTeams =
+        currentTeams.slice(0,currentRound/2);
+
+    const rightTeams =
+        currentTeams.slice(currentRound/2);
+
+    const left =
+        createSide(leftTeams,false);
+
+    const center =
+        document.createElement("div");
+
+    center.className = "center";
+
+    center.innerHTML = `
+        <div class="center-box">
+            WINNER
+        </div>
+    `;
+
+    const right =
+        createSide(
+            rightTeams.reverse(),
+            true
+        );
+
+    bracket.appendChild(left);
+    bracket.appendChild(center);
+    bracket.appendChild(right);
+
+}
+
+
+/* =========================
+   CREATE SIDE
+========================= */
+
+function createSide(teams,isRight){
+
+    const side =
+        document.createElement("div");
+
+    side.className =
+        "side " +
+        (isRight ? "right" : "left");
+
+    teams.forEach(team=>{
+
+        const match =
+            document.createElement("div");
+
+        match.className = "match";
+
+        const teamBox =
+            document.createElement("div");
+
+        teamBox.className = "team";
+
+        teamBox.textContent = team;
+
+        if(!team){
+            teamBox.classList.add("empty");
+        }
+
+        const connector =
+            document.createElement("div");
+
+        connector.className = "connector";
+
+        match.appendChild(teamBox);
+        match.appendChild(connector);
+
+        side.appendChild(match);
+
+    });
+
+    return side;
+}
+
+
+/* =========================
+   RESET
+========================= */
+
+function resetBracket(){
+
+    const confirmReset =
+        confirm(
+            "Are you sure you want to reset the bracket?"
+        );
+
+    if(!confirmReset) return;
+
+    localStorage.removeItem(
+        "ECOB_BRACKET_TEAMS"
+    );
+
+    localStorage.removeItem(
+        "ECOB_BRACKET_ROUND"
+    );
+
+    localStorage.removeItem(
+        "ECOB_BRACKET_GENERATED"
+    );
+
+    document.getElementById(
+        "bracketArea"
+    ).style.display = "none";
+
+    createTeamInputs();
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
+
+
+/* =========================
+   AUTO LOAD
+========================= */
+
+window.onload = function(){
+
+    const savedRound =
+        localStorage.getItem(
+            "ECOB_BRACKET_ROUND"
+        );
+
+    if(savedRound){
+
+        currentRound =
+            Number(savedRound);
+
+        document.getElementById(
+            "roundSelect"
+        ).value = currentRound;
+
+    }
+
+    createTeamInputs();
+
+    const generated =
+        localStorage.getItem(
+            "ECOB_BRACKET_GENERATED"
+        );
+
+    if(
+        generated === "YES" &&
+        localStorage.getItem(
+            "ECOB_BRACKET_TEAMS"
+        )
+    ){
+
+        const saved =
+            JSON.parse(
+                localStorage.getItem(
+                    "ECOB_BRACKET_TEAMS"
+                )
+            );
+
+        currentTeams = saved;
+
+        drawBracket();
+
+        document.getElementById(
+            "bracketArea"
+        ).style.display = "block";
+    }
+
+};
+
+
+/* =========================
+   SAVE IMAGE
+========================= */
+
+async function saveBracketImage(){
+
+    const area =
+        document.getElementById("bracket");
+
+    try{
+
+        if(
+            typeof html2canvas === "undefined"
+        ){
+
+            alert(
+                "Image library is loading. Please try again."
+            );
+
+            return;
+        }
+
+        const canvas =
+            await html2canvas(area,{
+                backgroundColor:"#101015",
+                scale:2,
+                useCORS:true
+            });
+
+        canvas.toBlob(function(blob){
+
+            const fileName =
+                "ECOB_BRACKET_" +
+                currentRound +
+                "_TEAMS.png";
+
+            const link =
+                document.createElement("a");
+
+            link.download = fileName;
+
+            link.href =
+                URL.createObjectURL(blob);
+
+            link.click();
+
+            URL.revokeObjectURL(
+                link.href
+            );
+
+        },"image/png");
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "Could not save bracket image."
+        );
+
+    }
+
+}
+
+</script>
+
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js">
+</script>
+
+</body>
+</html>

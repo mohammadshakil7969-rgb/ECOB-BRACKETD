@@ -13,14 +13,14 @@
 }
 
 body{
-    font-family:Arial,sans-serif;
-    background:#0b0b0f;
+    font-family:Arial, sans-serif;
+    background:#08090d;
     color:#fff;
     padding:20px;
 }
 
 .container{
-    max-width:1200px;
+    max-width:1400px;
     margin:auto;
 }
 
@@ -30,19 +30,19 @@ body{
 }
 
 .header h1{
-    font-size:32px;
+    font-size:34px;
     font-weight:900;
     letter-spacing:2px;
 }
 
 .header p{
-    color:#999;
-    margin-top:5px;
+    color:#8d8d96;
+    margin-top:7px;
 }
 
 .card{
-    background:#15151b;
-    border:1px solid #292932;
+    background:#12141a;
+    border:1px solid #292c35;
     border-radius:14px;
     padding:20px;
     margin-bottom:20px;
@@ -50,7 +50,7 @@ body{
 
 label{
     display:block;
-    font-weight:bold;
+    font-weight:700;
     margin-bottom:8px;
 }
 
@@ -58,10 +58,10 @@ select,
 input{
     width:100%;
     height:45px;
-    border:1px solid #34343d;
-    background:#0d0d12;
+    background:#090a0e;
+    border:1px solid #30333d;
+    border-radius:7px;
     color:#fff;
-    border-radius:8px;
     padding:0 12px;
     outline:none;
 }
@@ -74,25 +74,183 @@ input:focus{
 .team-grid{
     display:grid;
     grid-template-columns:repeat(2,1fr);
-    gap:12px;
-    margin-top:15px;
+    gap:10px;
+    margin-top:18px;
 }
 
 button{
     border:0;
     border-radius:8px;
     height:48px;
-    padding:0 20px;
-    font-size:15px;
+    font-size:14px;
     font-weight:800;
     cursor:pointer;
 }
 
 .generate{
     width:100%;
-    margin-top:20px;
     background:#fff;
     color:#000;
+    margin-top:20px;
+}
+
+#bracketArea{
+    display:none;
+}
+
+.bracket-header{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.bracket-header h2{
+    font-size:25px;
+}
+
+.bracket-header p{
+    color:#888;
+    margin-top:5px;
+}
+
+.bracket-wrapper{
+    overflow-x:auto;
+    background:#090a0e;
+    border:1px solid #292c35;
+    border-radius:12px;
+    padding:35px 25px;
+}
+
+.bracket{
+    min-width:1050px;
+    display:grid;
+    grid-template-columns:1fr 1fr 170px 1fr 1fr;
+    gap:25px;
+    align-items:stretch;
+}
+
+.bracket-side{
+    display:flex;
+    flex-direction:column;
+    justify-content:space-around;
+}
+
+.round{
+    display:flex;
+    flex-direction:column;
+    justify-content:space-around;
+    min-width:170px;
+}
+
+.round-title{
+    text-align:center;
+    color:#aaa;
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:1px;
+    margin-bottom:10px;
+}
+
+.matches{
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-around;
+    gap:15px;
+}
+
+.match{
+    position:relative;
+}
+
+.team{
+    height:38px;
+    background:#171a21;
+    border:1px solid #343843;
+    display:flex;
+    align-items:center;
+    padding:0 10px;
+    font-size:13px;
+    font-weight:700;
+    border-radius:5px;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+
+.team:first-child{
+    margin-bottom:3px;
+}
+
+.placeholder{
+    color:#6e717a;
+    font-weight:500;
+}
+
+.left .match::after{
+    content:"";
+    position:absolute;
+    right:-25px;
+    top:50%;
+    width:25px;
+    height:1px;
+    background:#555;
+}
+
+.right .match::before{
+    content:"";
+    position:absolute;
+    left:-25px;
+    top:50%;
+    width:25px;
+    height:1px;
+    background:#555;
+}
+
+.final-column{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    min-width:170px;
+}
+
+.final-title{
+    color:#fff;
+    font-size:13px;
+    font-weight:900;
+    letter-spacing:2px;
+    margin-bottom:15px;
+}
+
+.final-box{
+    width:160px;
+    border:2px solid #fff;
+    border-radius:8px;
+    overflow:hidden;
+}
+
+.final-team{
+    height:45px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#171a21;
+    font-weight:800;
+    font-size:13px;
+    padding:5px;
+    text-align:center;
+}
+
+.final-team:first-child{
+    border-bottom:1px solid #555;
+}
+
+.champion{
+    margin-top:20px;
+    text-align:center;
+    color:#aaa;
+    font-size:11px;
+    letter-spacing:1px;
 }
 
 .actions{
@@ -106,128 +264,31 @@ button{
 }
 
 .save{
-    background:#20c878;
+    background:#18bd72;
     color:#fff;
 }
 
 .reset{
-    background:#292932;
+    background:#292c35;
     color:#fff;
-}
-
-#bracketArea{
-    display:none;
-}
-
-.bracket-title{
-    text-align:center;
-    margin-bottom:25px;
-}
-
-.bracket-title h2{
-    font-size:24px;
-}
-
-.bracket{
-    display:flex;
-    justify-content:space-between;
-    align-items:stretch;
-    gap:20px;
-    overflow-x:auto;
-    padding:25px;
-    background:#101015;
-    border-radius:12px;
-    min-height:500px;
-}
-
-.side{
-    display:flex;
-    flex-direction:column;
-    justify-content:space-around;
-    min-width:270px;
-    flex:1;
-}
-
-.side.right{
-    direction:rtl;
-}
-
-.side.right .match{
-    direction:ltr;
-}
-
-.match{
-    position:relative;
-    display:flex;
-    flex-direction:column;
-    gap:4px;
-    margin:10px 0;
-}
-
-.team{
-    min-height:42px;
-    display:flex;
-    align-items:center;
-    padding:0 12px;
-    background:#1b1b22;
-    border:1px solid #363640;
-    border-radius:6px;
-    font-size:14px;
-    font-weight:bold;
-}
-
-.connector{
-    position:absolute;
-    width:20px;
-    height:1px;
-    background:#555;
-    top:50%;
-}
-
-.left .connector{
-    right:-20px;
-}
-
-.right .connector{
-    left:-20px;
-}
-
-.center{
-    min-width:150px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-}
-
-.center-box{
-    padding:18px 15px;
-    border:2px solid #fff;
-    border-radius:10px;
-    font-weight:900;
-}
-
-.empty{
-    color:#777;
-    font-weight:normal;
 }
 
 @media(max-width:700px){
 
     body{
-        padding:12px;
+        padding:10px;
     }
 
     .header h1{
-        font-size:25px;
+        font-size:27px;
     }
 
     .team-grid{
         grid-template-columns:1fr;
     }
 
-    .bracket{
-        min-width:850px;
+    .bracket-wrapper{
+        padding:25px 15px;
     }
 }
 </style>
@@ -239,17 +300,17 @@ button{
 
     <div class="header">
         <h1>ECOB BRACKET</h1>
-        <p>Tournament Bracket Generator</p>
+        <p>Knockout Tournament Generator</p>
     </div>
 
     <div class="card">
 
         <label>SELECT ROUND</label>
 
-        <select id="roundSelect" onchange="createTeamInputs()">
-            <option value="8">8 Teams</option>
-            <option value="16">16 Teams</option>
-            <option value="32" selected>32 Teams</option>
+        <select id="roundSelect" onchange="createInputs()">
+            <option value="8">8 TEAMS</option>
+            <option value="16">16 TEAMS</option>
+            <option value="32" selected>32 TEAMS</option>
         </select>
 
         <div id="teamInputs" class="team-grid"></div>
@@ -260,23 +321,71 @@ button{
 
     </div>
 
+
     <div id="bracketArea">
 
         <div class="card">
 
-            <div class="bracket-title">
+            <div class="bracket-header">
                 <h2>ECOB BRACKET</h2>
+                <p id="bracketRound"></p>
             </div>
 
-            <div id="bracket" class="bracket"></div>
+            <div class="bracket-wrapper">
+
+                <div class="bracket">
+
+                    <!-- LEFT SIDE -->
+
+                    <div class="bracket-side left" id="leftR1"></div>
+
+                    <div class="bracket-side left" id="leftR2"></div>
+
+                    <div class="bracket-side left" id="leftR3"></div>
+
+
+                    <!-- FINAL -->
+
+                    <div class="final-column">
+
+                        <div class="final-title">
+                            FINAL
+                        </div>
+
+                        <div class="final-box">
+
+                            <div class="final-team placeholder">
+                                Winner SF 1
+                            </div>
+
+                            <div class="final-team placeholder">
+                                Winner SF 2
+                            </div>
+
+                        </div>
+
+                        <div class="champion">
+                            CHAMPION
+                        </div>
+
+                    </div>
+
+
+                    <!-- RIGHT SIDE -->
+
+                    <div class="bracket-side right" id="rightRounds"></div>
+
+                </div>
+
+            </div>
 
             <div class="actions">
 
-                <button class="save" onclick="saveBracketImage()">
+                <button class="save" onclick="saveImage()">
                     SAVE BRACKET IMAGE
                 </button>
 
-                <button class="reset" onclick="resetBracket()">
+                <button class="reset" onclick="resetAll()">
                     RESET
                 </button>
 
@@ -291,131 +400,65 @@ button{
 
 <script>
 
-let currentTeams = [];
-let currentRound = 32;
+let teamCount = 32;
+let teams = [];
 
 
 /* =========================
    CREATE TEAM INPUTS
 ========================= */
 
-function createTeamInputs(){
+function createInputs(){
 
-    currentRound = Number(
-        document.getElementById("roundSelect").value
-    );
+    teamCount =
+        Number(document.getElementById("roundSelect").value);
 
-    const box = document.getElementById("teamInputs");
+    const box =
+        document.getElementById("teamInputs");
 
     box.innerHTML = "";
 
-    for(let i = 1; i <= currentRound; i++){
+    for(let i=1;i<=teamCount;i++){
 
-        const input = document.createElement("input");
+        const input =
+            document.createElement("input");
 
         input.type = "text";
+        input.id = "team" + i;
         input.placeholder = "Team " + i;
-        input.id = "team_" + i;
 
         box.appendChild(input);
     }
 
-    loadSavedTeams();
+    loadSaved();
+
 }
 
 
 /* =========================
-   SAVE TEAM DATA
-========================= */
-
-function saveTeams(){
-
-    const teams = [];
-
-    for(let i = 1; i <= currentRound; i++){
-
-        const input = document.getElementById("team_" + i);
-
-        teams.push(input ? input.value : "");
-    }
-
-    localStorage.setItem(
-        "ECOB_BRACKET_TEAMS",
-        JSON.stringify(teams)
-    );
-
-    localStorage.setItem(
-        "ECOB_BRACKET_ROUND",
-        currentRound
-    );
-}
-
-
-/* =========================
-   LOAD SAVED DATA
-========================= */
-
-function loadSavedTeams(){
-
-    const saved = localStorage.getItem(
-        "ECOB_BRACKET_TEAMS"
-    );
-
-    if(!saved) return;
-
-    try{
-
-        const teams = JSON.parse(saved);
-
-        teams.forEach((name,index)=>{
-
-            const input = document.getElementById(
-                "team_" + (index + 1)
-            );
-
-            if(input){
-                input.value = name;
-            }
-
-        });
-
-    }catch(e){
-
-        console.log(e);
-
-    }
-}
-
-
-/* =========================
-   GENERATE BRACKET
+   GENERATE
 ========================= */
 
 function generateBracket(){
 
-    saveTeams();
+    teams = [];
 
-    currentTeams = [];
+    for(let i=1;i<=teamCount;i++){
 
-    for(let i = 1; i <= currentRound; i++){
+        const input =
+            document.getElementById("team"+i);
 
-        const input = document.getElementById(
-            "team_" + i
-        );
-
-        let name = input.value.trim();
+        let name =
+            input.value.trim();
 
         if(name === ""){
             name = "Team " + i;
         }
 
-        currentTeams.push(name);
+        teams.push(name);
     }
 
-    localStorage.setItem(
-        "ECOB_BRACKET_GENERATED",
-        "YES"
-    );
+    saveData();
 
     drawBracket();
 
@@ -423,15 +466,11 @@ function generateBracket(){
         "bracketArea"
     ).style.display = "block";
 
-    setTimeout(()=>{
-
-        document.getElementById(
-            "bracketArea"
-        ).scrollIntoView({
-            behavior:"smooth"
-        });
-
-    },100);
+    document.getElementById(
+        "bracketArea"
+    ).scrollIntoView({
+        behavior:"smooth"
+    });
 
 }
 
@@ -442,88 +481,281 @@ function generateBracket(){
 
 function drawBracket(){
 
-    const bracket =
-        document.getElementById("bracket");
+    document.getElementById("leftR1").innerHTML = "";
+    document.getElementById("leftR2").innerHTML = "";
+    document.getElementById("leftR3").innerHTML = "";
 
-    bracket.innerHTML = "";
+    document.getElementById("rightRounds").innerHTML = "";
 
-    const leftTeams =
-        currentTeams.slice(0,currentRound/2);
+    document.getElementById(
+        "bracketRound"
+    ).textContent =
+        teamCount + " TEAM KNOCKOUT";
 
-    const rightTeams =
-        currentTeams.slice(currentRound/2);
 
-    const left =
-        createSide(leftTeams,false);
+    /*
+       8 TEAM
+       QF -> SF -> FINAL
+    */
 
-    const center =
-        document.createElement("div");
+    if(teamCount === 8){
 
-    center.className = "center";
+        createMatches(
+            document.getElementById("leftR1"),
+            teams.slice(0,4)
+        );
 
-    center.innerHTML = `
-        <div class="center-box">
-            WINNER
-        </div>
-    `;
-
-    const right =
-        createSide(
-            rightTeams.reverse(),
+        createMatches(
+            document.getElementById("leftR2"),
+            [
+                "Winner QF 1",
+                "Winner QF 2"
+            ],
             true
         );
 
-    bracket.appendChild(left);
-    bracket.appendChild(center);
-    bracket.appendChild(right);
+        createMatches(
+            document.getElementById("rightRounds"),
+            [
+                "Winner QF 4",
+                "Winner QF 3"
+            ],
+            true
+        );
+
+        return;
+    }
+
+
+    /*
+       16 TEAM
+       R16 -> QF -> SF -> FINAL
+    */
+
+    if(teamCount === 16){
+
+        createMatches(
+            document.getElementById("leftR1"),
+            teams.slice(0,8)
+        );
+
+        createMatches(
+            document.getElementById("leftR2"),
+            [
+                "Winner R16 1",
+                "Winner R16 2",
+                "Winner R16 3",
+                "Winner R16 4"
+            ],
+            true
+        );
+
+        createMatches(
+            document.getElementById("leftR3"),
+            [
+                "Winner QF 1",
+                "Winner QF 2"
+            ],
+            true
+        );
+
+
+        createMatches(
+            document.getElementById("rightRounds"),
+            [
+                "Winner QF 4",
+                "Winner QF 3",
+                "Winner R16 8",
+                "Winner R16 7",
+                "Winner R16 6",
+                "Winner R16 5"
+            ],
+            true
+        );
+
+        return;
+    }
+
+
+    /*
+       32 TEAM
+       R32 -> R16 -> QF -> SF -> FINAL
+    */
+
+    if(teamCount === 32){
+
+        /*
+          Left 16 teams
+        */
+
+        createMatches(
+            document.getElementById("leftR1"),
+            teams.slice(0,16)
+        );
+
+        /*
+          Right 16 teams
+        */
+
+        createMatches(
+            document.getElementById("rightRounds"),
+            teams.slice(16,32).reverse()
+        );
+
+        /*
+          Extra rounds are represented
+          in the middle-left/right structure.
+        */
+
+        document.getElementById(
+            "leftR2"
+        ).innerHTML = roundMatches(
+            "ROUND OF 16",
+            8,
+            "Winner R32"
+        );
+
+        document.getElementById(
+            "leftR3"
+        ).innerHTML = roundMatches(
+            "QUARTER FINAL",
+            4,
+            "Winner R16"
+        );
+
+    }
 
 }
 
 
 /* =========================
-   CREATE SIDE
+   MATCH CREATOR
 ========================= */
 
-function createSide(teams,isRight){
+function createMatches(container,names,placeholder=false){
 
-    const side =
-        document.createElement("div");
+    container.innerHTML = "";
 
-    side.className =
-        "side " +
-        (isRight ? "right" : "left");
-
-    teams.forEach(team=>{
+    for(let i=0;i<names.length;i+=2){
 
         const match =
             document.createElement("div");
 
         match.className = "match";
 
-        const teamBox =
+        const t1 =
             document.createElement("div");
 
-        teamBox.className = "team";
-
-        teamBox.textContent = team;
-
-        if(!team){
-            teamBox.classList.add("empty");
-        }
-
-        const connector =
+        const t2 =
             document.createElement("div");
 
-        connector.className = "connector";
+        t1.className =
+            "team " +
+            (placeholder ? "placeholder" : "");
 
-        match.appendChild(teamBox);
-        match.appendChild(connector);
+        t2.className =
+            "team " +
+            (placeholder ? "placeholder" : "");
 
-        side.appendChild(match);
+        t1.textContent =
+            names[i] || "TBD";
 
-    });
+        t2.textContent =
+            names[i+1] || "TBD";
 
-    return side;
+        match.appendChild(t1);
+        match.appendChild(t2);
+
+        container.appendChild(match);
+    }
+
+}
+
+
+/* =========================
+   ROUND MATCHES
+========================= */
+
+function roundMatches(title,count,prefix){
+
+    let html =
+        '<div class="round-title">'+
+        title+
+        '</div>';
+
+    html += '<div class="matches">';
+
+    for(let i=1;i<=count;i++){
+
+        html += `
+            <div class="match">
+                <div class="team placeholder">
+                    ${prefix} ${i}
+                </div>
+                <div class="team placeholder">
+                    ${prefix} ${i}
+                </div>
+            </div>
+        `;
+
+    }
+
+    html += "</div>";
+
+    return html;
+}
+
+
+/* =========================
+   SAVE DATA
+========================= */
+
+function saveData(){
+
+    localStorage.setItem(
+        "ECOB_ROUND",
+        teamCount
+    );
+
+    localStorage.setItem(
+        "ECOB_TEAMS",
+        JSON.stringify(teams)
+    );
+
+}
+
+
+/* =========================
+   LOAD DATA
+========================= */
+
+function loadSaved(){
+
+    const saved =
+        localStorage.getItem("ECOB_TEAMS");
+
+    if(!saved) return;
+
+    try{
+
+        const data =
+            JSON.parse(saved);
+
+        data.forEach((name,index)=>{
+
+            const input =
+                document.getElementById(
+                    "team"+(index+1)
+                );
+
+            if(input){
+                input.value = name;
+            }
+
+        });
+
+    }catch(e){}
+
 }
 
 
@@ -531,164 +763,110 @@ function createSide(teams,isRight){
    RESET
 ========================= */
 
-function resetBracket(){
+function resetAll(){
 
-    const confirmReset =
-        confirm(
-            "Are you sure you want to reset the bracket?"
-        );
+    if(!confirm(
+        "Reset ECOB BRACKET?"
+    )){
+        return;
+    }
 
-    if(!confirmReset) return;
-
-    localStorage.removeItem(
-        "ECOB_BRACKET_TEAMS"
-    );
-
-    localStorage.removeItem(
-        "ECOB_BRACKET_ROUND"
-    );
-
-    localStorage.removeItem(
-        "ECOB_BRACKET_GENERATED"
-    );
+    localStorage.removeItem("ECOB_ROUND");
+    localStorage.removeItem("ECOB_TEAMS");
 
     document.getElementById(
         "bracketArea"
     ).style.display = "none";
 
-    createTeamInputs();
+    createInputs();
 
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
 }
-
-
-/* =========================
-   AUTO LOAD
-========================= */
-
-window.onload = function(){
-
-    const savedRound =
-        localStorage.getItem(
-            "ECOB_BRACKET_ROUND"
-        );
-
-    if(savedRound){
-
-        currentRound =
-            Number(savedRound);
-
-        document.getElementById(
-            "roundSelect"
-        ).value = currentRound;
-
-    }
-
-    createTeamInputs();
-
-    const generated =
-        localStorage.getItem(
-            "ECOB_BRACKET_GENERATED"
-        );
-
-    if(
-        generated === "YES" &&
-        localStorage.getItem(
-            "ECOB_BRACKET_TEAMS"
-        )
-    ){
-
-        const saved =
-            JSON.parse(
-                localStorage.getItem(
-                    "ECOB_BRACKET_TEAMS"
-                )
-            );
-
-        currentTeams = saved;
-
-        drawBracket();
-
-        document.getElementById(
-            "bracketArea"
-        ).style.display = "block";
-    }
-
-};
 
 
 /* =========================
    SAVE IMAGE
 ========================= */
 
-async function saveBracketImage(){
+async function saveImage(){
 
-    const area =
-        document.getElementById("bracket");
+    const bracket =
+        document.querySelector(
+            ".bracket-wrapper"
+        );
+
+    if(typeof html2canvas === "undefined"){
+
+        alert(
+            "Please wait and try again."
+        );
+
+        return;
+    }
 
     try{
 
-        if(
-            typeof html2canvas === "undefined"
-        ){
-
-            alert(
-                "Image library is loading. Please try again."
-            );
-
-            return;
-        }
-
         const canvas =
-            await html2canvas(area,{
-                backgroundColor:"#101015",
-                scale:2,
-                useCORS:true
-            });
-
-        canvas.toBlob(function(blob){
-
-            const fileName =
-                "ECOB_BRACKET_" +
-                currentRound +
-                "_TEAMS.png";
-
-            const link =
-                document.createElement("a");
-
-            link.download = fileName;
-
-            link.href =
-                URL.createObjectURL(blob);
-
-            link.click();
-
-            URL.revokeObjectURL(
-                link.href
+            await html2canvas(
+                bracket,
+                {
+                    backgroundColor:"#090a0e",
+                    scale:2
+                }
             );
 
-        },"image/png");
+        const link =
+            document.createElement("a");
+
+        link.download =
+            "ECOB-BRACKET.png";
+
+        link.href =
+            canvas.toDataURL("image/png");
+
+        link.click();
 
     }catch(error){
 
-        console.error(error);
-
         alert(
-            "Could not save bracket image."
+            "Unable to save image."
         );
+
+        console.log(error);
 
     }
 
 }
 
+
+/* =========================
+   START
+========================= */
+
+window.onload = function(){
+
+    const savedRound =
+        localStorage.getItem("ECOB_ROUND");
+
+    if(savedRound){
+
+        teamCount =
+            Number(savedRound);
+
+        document.getElementById(
+            "roundSelect"
+        ).value =
+            teamCount;
+
+    }
+
+    createInputs();
+
+};
+
 </script>
 
-<script
-src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js">
-</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 </body>
 </html>
